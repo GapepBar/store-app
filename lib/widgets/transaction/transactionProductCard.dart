@@ -35,15 +35,23 @@ class _TransactionProductCardState
     );
     print('Dialog one returned value ---> $qtyVal');
 
-    setState(() {
-      counter = qtyVal ?? 0.0;
-    });
-
-    if (qtyVal == 0.0) {
-      deleteHandler();
+    if ((qtyVal ?? 0) > product.totalQuantity) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Quantity exceeding available quantity'),
+        backgroundColor: Colors.red,
+      ));
     } else {
-      final cartViewModel = ref.read(transactionCartItemsProvider.notifier);
-      cartViewModel.updateCartItem(product.productId, qtyVal ?? 0);
+      setState(() {
+        counter = qtyVal ?? 0.0;
+      });
+
+      if (qtyVal == 0.0) {
+        deleteHandler();
+      } else {
+        final cartViewModel = ref.read(transactionCartItemsProvider.notifier);
+        cartViewModel.updateCartItem(product.productId, qtyVal ?? 0);
+      }
     }
   }
 
@@ -153,14 +161,22 @@ class _TransactionProductCardState
                   );
                   print('Dialog one returned value ---> $qtyVal');
 
-                  setState(() {
-                    counter = qtyVal ?? 0.0;
-                  });
+                  if ((qtyVal ?? 0) > product.totalQuantity) {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Quantity exceeding available quantity'),
+                      backgroundColor: Colors.red,
+                    ));
+                  } else {
+                    setState(() {
+                      counter = qtyVal ?? 0.0;
+                    });
 
-                  if (qtyVal != 0.0) {
-                    final cartViewModel =
-                        ref.read(transactionCartItemsProvider.notifier);
-                    cartViewModel.addCartItems(product, qtyVal ?? 0);
+                    if (qtyVal != 0.0) {
+                      final cartViewModel =
+                          ref.read(transactionCartItemsProvider.notifier);
+                      cartViewModel.addCartItems(product, qtyVal ?? 0);
+                    }
                   }
                 },
                 child: const Text('ADD')),
@@ -168,16 +184,27 @@ class _TransactionProductCardState
   }
 
   Widget _displayDialogBox(BuildContext context, String qtyType) {
+    final _formKey = GlobalKey<FormState>();
     return AlertDialog(
       title: Text('Fill the quantity'),
-      content: Column(
-        children: [
-          TextField(
-            controller: _textFieldController,
-          ),
-          SizedBox(height: 15),
-          Text(qtyType)
-        ],
+      content: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              controller: _textFieldController,
+            ),
+            SizedBox(height: 15),
+            Text(qtyType)
+          ],
+        ),
       ),
       actions: <Widget>[
         MaterialButton(
@@ -193,8 +220,12 @@ class _TransactionProductCardState
           textColor: Colors.white,
           child: const Text('OK'),
           onPressed: () {
-            Navigator.pop(
-                context, double.parse(_textFieldController.text.toString()));
+            if (_formKey.currentState!.validate()) {
+              String temp = _textFieldController.text.toString();
+              _textFieldController.clear();
+              Navigator.pop(context, double.parse(temp));
+            } else
+              return null;
           },
         ),
       ],

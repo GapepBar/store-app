@@ -126,6 +126,7 @@ class _PreviewOrderScreenState extends ConsumerState<PreviewOrderScreen> {
     if (msg == 'success') {
       Navigator.of(context).pushNamed('/orderSuccessScreen');
     } else {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Some error occured')));
     }

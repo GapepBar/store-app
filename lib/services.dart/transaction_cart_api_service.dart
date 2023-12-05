@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'package:gbim/models/product/product.dart';
+import 'package:gbim/models/transaction/transaction.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config.dart';
 import '../models/cart/cartitem.dart';
 import '../models/order/orders.dart';
 
-final transactioncartApiService = Provider((ref) => APIServiceTransactionCart());
+final transactioncartApiService =
+    Provider((ref) => APIServiceTransactionCart());
 
 class APIServiceTransactionCart {
   static var client = http.Client();
@@ -49,12 +51,12 @@ class APIServiceTransactionCart {
     }
   }
 
-  Future<List<Orders>> fetchYourTransactions(String categId) async {
+  Future<List<Transactions>> fetchYourTransactions(String categId) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };
 
-    var ur = "${Config.apiURL}${Config.fetchorders}";
+    var ur = "${Config.apiURL}${Config.fetchTransaction}";
     var url = Uri.parse(ur);
 
     print('url is: $url');
@@ -67,38 +69,37 @@ class APIServiceTransactionCart {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print(data);
-      return ordersFromJson(data['data']);
+      return transactionsFromJson(data['data']);
     } else {
       return [];
     }
   }
 
-  Future<Orders> orderdetailProvider(String orderId) async {
+  Future<Transactions> transactiondetailProvider(String transactionId) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };
 
-    var ur = "${Config.apiURL}${Config.fetchorderdetail}";
+    var ur = "${Config.apiURL}${Config.fetchtransactiondetail}";
     var url = Uri.parse(ur);
 
     print('url is: $url');
 
-    print(orderId);
+    print(transactionId);
 
     var response = await client.post(url,
-        headers: requestHeaders, body: jsonEncode({'orderId': orderId}));
+        headers: requestHeaders,
+        body: jsonEncode({'transactionId': transactionId}));
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print(data);
-      return Orders.fromJson(data['data']);
+      return Transactions.fromJson(data['data']);
     } else {
-      return Orders(
-          orderId: 'orderId',
-          date: DateTime(DateTime.april),
-          orderStatus: 'orderStatus',
+      return Transactions(
+          transactionDate: DateTime(DateTime.april),
           productsItem: [],
-          billedItems: []);
+          transactionId: '');
     }
   }
 }

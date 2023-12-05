@@ -167,16 +167,27 @@ class _OrderProductCardState extends ConsumerState<OrderProductCard> {
   }
 
   Widget _displayDialogBox(BuildContext context, String qtyType) {
+    final _formKey = GlobalKey<FormState>();
     return AlertDialog(
       title: Text('Fill the quantity'),
-      content: Column(
-        children: [
-          TextField(
-            controller: _textFieldController,
-          ),
-          SizedBox(height: 15),
-          Text(qtyType)
-        ],
+      content: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              controller: _textFieldController,
+            ),
+            SizedBox(height: 15),
+            Text(qtyType)
+          ],
+        ),
       ),
       actions: <Widget>[
         MaterialButton(
@@ -192,8 +203,12 @@ class _OrderProductCardState extends ConsumerState<OrderProductCard> {
           textColor: Colors.white,
           child: const Text('OK'),
           onPressed: () {
-            Navigator.pop(
-                context, double.parse(_textFieldController.text.toString()));
+            if (_formKey.currentState!.validate()) {
+              String temp = _textFieldController.text.toString();
+              _textFieldController.clear();
+              Navigator.pop(context, double.parse(temp));
+            } else
+              return null;
           },
         ),
       ],

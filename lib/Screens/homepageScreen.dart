@@ -84,22 +84,22 @@ class _HomepageScreenState extends State<HomepageScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             backgroundColor: Colors.black,
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.all_inbox),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.black,
-            icon: Icon(Icons.alarm),
+            icon: Icon(Icons.add_alert_rounded),
             label: 'Low Stock',
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.black,
-            icon: Icon(Icons.shopping_bag),
+            icon: Icon(Icons.add_box_rounded),
             label: 'Order',
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.black,
-            icon: Icon(Icons.monetization_on),
+            icon: Icon(Icons.remove_circle),
             label: 'Withdraw',
           ),
           BottomNavigationBarItem(
@@ -111,6 +111,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
         currentIndex: _selectedIndex,
         backgroundColor: Colors.black,
         selectedItemColor: Colors.amber[800],
+        showUnselectedLabels: true,
         onTap: _onItemTapped,
       ),
     );

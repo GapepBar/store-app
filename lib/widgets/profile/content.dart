@@ -164,7 +164,7 @@ class _ContentState extends ConsumerState<Content> {
               height: 3,
             ),
             iconRow(FontAwesomeIcons.solidAddressBook, 'Your Transactions',
-                context, '/transactionScreen', ref),
+                context, '/yourTransactionScreen', ref),
           ]),
         ),
         Container(

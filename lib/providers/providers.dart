@@ -5,6 +5,7 @@ import 'package:gbim/application/state/order_cart_state.dart';
 import 'package:gbim/application/state/transaction_cart_state.dart';
 import 'package:gbim/models/order/orders.dart';
 import 'package:gbim/models/product/product.dart';
+import 'package:gbim/models/transaction/transaction.dart';
 import 'package:gbim/services.dart/order_cart_api_service.dart';
 import 'package:gbim/services.dart/transaction_cart_api_service.dart';
 
@@ -65,10 +66,26 @@ final yourordersProvider =
   },
 );
 
+final yourtransactionsProvider =
+    FutureProvider.autoDispose.family<List<Transactions>, String>(
+  (ref, categId) {
+    final apiRespository = ref.watch(transactioncartApiService);
+
+    return apiRespository.fetchYourTransactions(categId);
+  },
+);
+
 final orderdetailProvider = FutureProvider.autoDispose.family<Orders, String>(
   (ref, orderId) {
     final apiRespository = ref.watch(ordercartApiService);
 
     return apiRespository.orderdetailProvider(orderId);
+  },
+);
+final transactiondetailProvider = FutureProvider.autoDispose.family<Transactions, String>(
+  (ref, transactionId) {
+    final apiRespository = ref.watch(transactioncartApiService);
+
+    return apiRespository.transactiondetailProvider(transactionId);
   },
 );

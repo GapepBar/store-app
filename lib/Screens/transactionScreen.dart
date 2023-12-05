@@ -19,20 +19,24 @@ class TransactionScreen extends ConsumerWidget {
       error: (_, __) => const Center(
         child: Text('Error'),
       ),
-      loading: () => const CircularProgressIndicator(),
+      loading: () => Center(child: const CircularProgressIndicator()),
     );
   }
 
   Widget allproductlistbuilder(List<Product>? list, BuildContext context,
       double scHeight, double scWidth) {
-    return ListView.builder(
-        itemCount: list!.length,
-        itemBuilder: (BuildContext context, int index) {
-          return TransactionProductCard(
-            product: list[index],
-            key: Key(index.toString()),
-          );
-        });
+    return list!.length == 0
+        ? Center(
+            child: Text('Empty List'),
+          )
+        : ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (BuildContext context, int index) {
+              return TransactionProductCard(
+                product: list[index],
+                key: Key(index.toString()),
+              );
+            });
   }
 
   @override
@@ -52,8 +56,16 @@ class TransactionScreen extends ConsumerWidget {
       body: allproductList(ref, context, categoryId, scHeight, scWidth),
       bottomNavigationBar: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed('/previewTransactionScreen',
-              arguments: {'categoryId': categoryId});
+          final cartViewModel = ref.read(transactionCartItemsProvider.notifier);
+          int val = cartViewModel.state.transactioncartModel!.products.length;
+          if (val == 0) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text('Cart is Empty')));
+          } else {
+            Navigator.of(context).pushNamed('/previewTransactionScreen',
+                arguments: {'categoryId': categoryId});
+          }
         },
         child: Container(
           height: 60,

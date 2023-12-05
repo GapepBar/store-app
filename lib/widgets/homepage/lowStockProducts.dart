@@ -70,7 +70,7 @@ class LowStockProducts extends ConsumerWidget {
       error: (_, __) => const Center(
         child: Text('Error'),
       ),
-      loading: () => const CircularProgressIndicator(),
+      loading: () => Center(child: const CircularProgressIndicator()),
     );
 
     // return lowStockproductlistbuilder(dummylist, context, scHeight, scWidth);
@@ -78,11 +78,15 @@ class LowStockProducts extends ConsumerWidget {
 
   Widget lowStockproductlistbuilder(List<Product>? list, BuildContext context,
       double scHeight, double scWidth) {
-    return ListView.builder(
-        itemCount: list!.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ProductCard(list[index], scWidth, context);
-        });
+    return list!.length == 0
+        ? Center(
+            child: Text('Empty List'),
+          )
+        : ListView.builder(
+            itemCount: list!.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ProductCard(list[index], scWidth, context);
+            });
   }
 
   Widget ProductCard(Product product, double scWidth, BuildContext context) {

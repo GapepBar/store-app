@@ -5,6 +5,7 @@ import 'package:gbim/Screens/orderSummaryScreen.dart';
 import 'package:gbim/Screens/previewOrderScreen.dart';
 import 'package:gbim/Screens/profileScreen.dart';
 import 'package:gbim/Screens/transactionScreen.dart';
+import 'package:gbim/Screens/transactionSummaryScreen.dart';
 import 'package:gbim/Screens/yourOrders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,6 +15,7 @@ import 'Screens/orderScreen.dart';
 import 'Screens/orderSuccessScreen.dart';
 import 'Screens/previewTransactionScreen.dart';
 import 'Screens/transactionSuccessScreen.dart';
+import 'Screens/yourTransactions.dart';
 
 void main() {
   runApp(
@@ -46,9 +48,11 @@ class MyApp extends StatelessWidget {
         '/previewOrderScreen': (context) => PreviewOrderScreen(),
         '/previewTransactionScreen': (context) => PreviewTransactionScreen(),
         '/yourOrderScreen': (context) => YourOrders(),
+        '/yourTransactionScreen': (context) => YourTransactions(),
         '/orderSuccessScreen': (context) => OrderSuccessScreen(),
         '/transactionSuccessScreen': (context) => TransactionSuccessScreen(),
         '/orderSummaryScreen': (context) => OrderSummaryScreen(),
+        '/transactionSummaryScreen': (context) => TransactionSummaryScreen(),
       }
     );
   }

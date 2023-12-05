@@ -130,6 +130,7 @@ class _PreviewTransactionScreenState
     if (msg == 'success') {
       Navigator.of(context).pushNamed('/transactionSuccessScreen');
     } else {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Some error occured')));
     }

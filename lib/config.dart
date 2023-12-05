@@ -52,6 +52,10 @@ class Config {
 
   static const String placeTransaction =
       '/transaction/createTransaction';
+  static const String fetchTransaction =
+      '/transaction/getTransactions';
+  static const String fetchtransactiondetail =
+      '/transaction/getTransactionById';
 
   /* -------------------------------- Offer Api ------------------------------- */
   static const String getAllOffers = '/offer/getAllOffers';

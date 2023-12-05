@@ -70,7 +70,7 @@ class OrderScreen extends ConsumerWidget {
       error: (_, __) => const Center(
         child: Text('Error'),
       ),
-      loading: () => const CircularProgressIndicator(),
+      loading: () => Center(child: const CircularProgressIndicator()),
     );
 
     // return allproductlistbuilder(dummylist, context, scHeight, scWidth);
@@ -78,11 +78,18 @@ class OrderScreen extends ConsumerWidget {
 
   Widget allproductlistbuilder(List<Product>? list, BuildContext context,
       double scHeight, double scWidth) {
-    return ListView.builder(
-        itemCount: list!.length,
-        itemBuilder: (BuildContext context, int index) {
-          return OrderProductCard(product: list[index], key: Key(index.toString()),);
-        });
+    return list!.length == 0
+        ? Center(
+            child: Text('Empty List'),
+          )
+        : ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (BuildContext context, int index) {
+              return OrderProductCard(
+                product: list[index],
+                key: Key(index.toString()),
+              );
+            });
   }
 
   @override
@@ -102,9 +109,16 @@ class OrderScreen extends ConsumerWidget {
       body: allproductList(ref, context, categoryId, scHeight, scWidth),
       bottomNavigationBar: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed('/previewOrderScreen', arguments: {
-            'categoryId': categoryId
-          });
+          final cartViewModel = ref.read(orderCartItemsProvider.notifier);
+          int val = cartViewModel.state.ordercartModel!.products.length;
+          if (val == 0) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text('Cart is Empty')));
+          } else {
+            Navigator.of(context).pushNamed('/previewOrderScreen',
+                arguments: {'categoryId': categoryId});
+          }
         },
         child: Container(
           height: 60,

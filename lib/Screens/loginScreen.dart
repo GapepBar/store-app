@@ -44,6 +44,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           }
           else
           {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Credentials'), backgroundColor: Colors.red,));
             setState(() {
               _isLoading = false;

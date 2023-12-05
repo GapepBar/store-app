@@ -26,7 +26,7 @@ class CategoryScreen extends ConsumerWidget {
       error: (_, __) => const Center(
         child: Text('Error'),
       ),
-      loading: () => const CircularProgressIndicator(),
+      loading: () => Center(child: const CircularProgressIndicator()),
     );
 
     // return categorylistbuilder(dummylist, context, scHeight, scWidth);
