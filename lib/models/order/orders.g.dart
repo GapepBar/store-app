@@ -16,6 +16,8 @@ _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
       billedItems: (json['billedItems'] as List<dynamic>)
           .map((e) => e as Map<String, dynamic>)
           .toList(),
+      bill: (json['bill'] as num).toDouble(),
+      deliveryCharges: (json['deliveryCharges'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
@@ -25,4 +27,6 @@ Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
       'orderStatus': instance.orderStatus,
       'productsItem': instance.productsItem,
       'billedItems': instance.billedItems,
+      'bill': instance.bill,
+      'deliveryCharges': instance.deliveryCharges,
     };

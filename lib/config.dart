@@ -11,7 +11,7 @@ class Config {
   // static const String apiURL = 'http://10.183.216.61:8000';
   // static const String apiURL = 'http://localhost:8000';
   // static const String apiURL = '127.0.0.1:8000';
-  static const String apiURL = 'http://192.168.229.122:8000';
+  static const String apiURL = 'http://192.168.153.122:8000';
   // 127.0.0.1:8000
   // 192.168.1.16:8000
   // static const String apiURL =

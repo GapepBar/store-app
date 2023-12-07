@@ -27,6 +27,8 @@ mixin _$Orders {
       throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get billedItems =>
       throw _privateConstructorUsedError;
+  double get bill => throw _privateConstructorUsedError;
+  double get deliveryCharges => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +45,9 @@ abstract class $OrdersCopyWith<$Res> {
       DateTime date,
       String orderStatus,
       List<Map<String, dynamic>> productsItem,
-      List<Map<String, dynamic>> billedItems});
+      List<Map<String, dynamic>> billedItems,
+      double bill,
+      double deliveryCharges});
 }
 
 /// @nodoc
@@ -64,6 +68,8 @@ class _$OrdersCopyWithImpl<$Res, $Val extends Orders>
     Object? orderStatus = null,
     Object? productsItem = null,
     Object? billedItems = null,
+    Object? bill = null,
+    Object? deliveryCharges = null,
   }) {
     return _then(_value.copyWith(
       orderId: null == orderId
@@ -86,6 +92,14 @@ class _$OrdersCopyWithImpl<$Res, $Val extends Orders>
           ? _value.billedItems
           : billedItems // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
+      bill: null == bill
+          ? _value.bill
+          : bill // ignore: cast_nullable_to_non_nullable
+              as double,
+      deliveryCharges: null == deliveryCharges
+          ? _value.deliveryCharges
+          : deliveryCharges // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -102,7 +116,9 @@ abstract class _$$OrderImplCopyWith<$Res> implements $OrdersCopyWith<$Res> {
       DateTime date,
       String orderStatus,
       List<Map<String, dynamic>> productsItem,
-      List<Map<String, dynamic>> billedItems});
+      List<Map<String, dynamic>> billedItems,
+      double bill,
+      double deliveryCharges});
 }
 
 /// @nodoc
@@ -121,6 +137,8 @@ class __$$OrderImplCopyWithImpl<$Res>
     Object? orderStatus = null,
     Object? productsItem = null,
     Object? billedItems = null,
+    Object? bill = null,
+    Object? deliveryCharges = null,
   }) {
     return _then(_$OrderImpl(
       orderId: null == orderId
@@ -143,6 +161,14 @@ class __$$OrderImplCopyWithImpl<$Res>
           ? _value._billedItems
           : billedItems // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
+      bill: null == bill
+          ? _value.bill
+          : bill // ignore: cast_nullable_to_non_nullable
+              as double,
+      deliveryCharges: null == deliveryCharges
+          ? _value.deliveryCharges
+          : deliveryCharges // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -155,7 +181,9 @@ class _$OrderImpl implements _Order {
       required this.date,
       required this.orderStatus,
       required final List<Map<String, dynamic>> productsItem,
-      required final List<Map<String, dynamic>> billedItems})
+      required final List<Map<String, dynamic>> billedItems,
+      required this.bill,
+      required this.deliveryCharges})
       : _productsItem = productsItem,
         _billedItems = billedItems;
 
@@ -185,8 +213,13 @@ class _$OrderImpl implements _Order {
   }
 
   @override
+  final double bill;
+  @override
+  final double deliveryCharges;
+
+  @override
   String toString() {
-    return 'Orders(orderId: $orderId, date: $date, orderStatus: $orderStatus, productsItem: $productsItem, billedItems: $billedItems)';
+    return 'Orders(orderId: $orderId, date: $date, orderStatus: $orderStatus, productsItem: $productsItem, billedItems: $billedItems, bill: $bill, deliveryCharges: $deliveryCharges)';
   }
 
   @override
@@ -201,7 +234,10 @@ class _$OrderImpl implements _Order {
             const DeepCollectionEquality()
                 .equals(other._productsItem, _productsItem) &&
             const DeepCollectionEquality()
-                .equals(other._billedItems, _billedItems));
+                .equals(other._billedItems, _billedItems) &&
+            (identical(other.bill, bill) || other.bill == bill) &&
+            (identical(other.deliveryCharges, deliveryCharges) ||
+                other.deliveryCharges == deliveryCharges));
   }
 
   @JsonKey(ignore: true)
@@ -212,7 +248,9 @@ class _$OrderImpl implements _Order {
       date,
       orderStatus,
       const DeepCollectionEquality().hash(_productsItem),
-      const DeepCollectionEquality().hash(_billedItems));
+      const DeepCollectionEquality().hash(_billedItems),
+      bill,
+      deliveryCharges);
 
   @JsonKey(ignore: true)
   @override
@@ -234,7 +272,9 @@ abstract class _Order implements Orders {
       required final DateTime date,
       required final String orderStatus,
       required final List<Map<String, dynamic>> productsItem,
-      required final List<Map<String, dynamic>> billedItems}) = _$OrderImpl;
+      required final List<Map<String, dynamic>> billedItems,
+      required final double bill,
+      required final double deliveryCharges}) = _$OrderImpl;
 
   factory _Order.fromJson(Map<String, dynamic> json) = _$OrderImpl.fromJson;
 
@@ -248,6 +288,10 @@ abstract class _Order implements Orders {
   List<Map<String, dynamic>> get productsItem;
   @override
   List<Map<String, dynamic>> get billedItems;
+  @override
+  double get bill;
+  @override
+  double get deliveryCharges;
   @override
   @JsonKey(ignore: true)
   _$$OrderImplCopyWith<_$OrderImpl> get copyWith =>

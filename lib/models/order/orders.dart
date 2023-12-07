@@ -14,7 +14,10 @@ abstract class Orders with _$Orders {
       required DateTime date,
       required String orderStatus,
       required List<Map<String, dynamic>> productsItem,
-      required List<Map<String, dynamic>> billedItems}) = _Order;
+      required List<Map<String, dynamic>> billedItems,
+      required double bill,
+      required double deliveryCharges
+      }) = _Order;
 
   factory Orders.fromJson(Map<String, dynamic> json) => _$OrdersFromJson(json);
 }

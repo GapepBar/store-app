@@ -82,6 +82,7 @@ final orderdetailProvider = FutureProvider.autoDispose.family<Orders, String>(
     return apiRespository.orderdetailProvider(orderId);
   },
 );
+
 final transactiondetailProvider = FutureProvider.autoDispose.family<Transactions, String>(
   (ref, transactionId) {
     final apiRespository = ref.watch(transactioncartApiService);

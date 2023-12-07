@@ -98,7 +98,9 @@ class APIServiceOrderCart {
           date: DateTime(DateTime.april),
           orderStatus: 'orderStatus',
           productsItem: [],
-          billedItems: []);
+          billedItems: [],
+          bill: 0,
+          deliveryCharges: 0);
     }
   }
 }

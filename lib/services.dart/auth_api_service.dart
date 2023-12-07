@@ -13,8 +13,7 @@ class APIServiceCategory {
       'Content-Type': 'application/json',
     };
 
-    var ur =
-        "${Config.apiURL}${Config.LoginAPI}";
+    var ur = "${Config.apiURL}${Config.LoginAPI}";
     var url = Uri.parse(ur);
 
     // var response = await client.get(
@@ -25,8 +24,12 @@ class APIServiceCategory {
     var response = await client.post(
       url,
       headers: requestHeaders,
-      body: jsonEncode(
-          {'userId': mp['userid'], 'password': mp['password']}),
+      body: jsonEncode({
+        'userId': mp['userid'],
+        'password': mp['password'],
+        'role': 'worker',
+        'category': ''
+      }),
     );
 
     if (response.statusCode == 200) {

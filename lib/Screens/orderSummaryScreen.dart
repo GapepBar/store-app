@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gbim/models/order/orders.dart';
 import 'package:intl/intl.dart';
 
+import '../models/order/orders.dart';
 import '../providers/providers.dart';
 
 class OrderSummaryScreen extends ConsumerWidget {
@@ -48,7 +48,7 @@ class OrderSummaryScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Order Summary",
+                          "Requested Products",
                           style: TextStyle(
                               fontSize: 25, fontWeight: FontWeight.bold),
                         )
@@ -92,6 +92,69 @@ class OrderSummaryScreen extends ConsumerWidget {
             ),
             /* ----------------------------- Upper container ---------------------------- */
             SizedBox(height: 20),
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  boxShadow: const [BoxShadow(blurRadius: 1, spreadRadius: 0)],
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  color: Colors.white),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Billed Products",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.symmetric(vertical: 8),
+                    child: Text(
+                      "${order.billedItems.length} items in this order",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
+                  ),
+
+                  /* --------------------------- List tile for item --------------------------- */
+                  Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (context, i) {
+                          return ListTile(
+                            leading: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              child: Image.network(
+                                  order.billedItems[i]['product']['imageUrl']),
+                            ),
+                            title:
+                                Text(order.billedItems[i]['product']['name']),
+                            subtitle: Text(
+                                "${order.billedItems[i]['quantity'].toString()} ${order.billedItems[i]['product']['quantityType'].toString()}"),
+                            trailing: Text(
+                                "₹${order.billedItems[i]['price'].toString()}"),
+                          );
+                        },
+                        itemCount: order.billedItems.length,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            /* ----------------------------- Upper container ---------------------------- */
+            SizedBox(height: 20),
             /* ----------------------- Container For Bill Details ----------------------- */
             Container(
               padding: EdgeInsets.all(10),
@@ -112,15 +175,15 @@ class OrderSummaryScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("MRP"),
-                      Text("₹"),
+                      Text("₹${order.bill}"),
                     ],
                   ),
                   SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text("Delivery Charges"),
-                      Text("₹0"),
+                      Text("₹${order.deliveryCharges}"),
                     ],
                   ),
                   SizedBox(height: 8),
@@ -133,7 +196,7 @@ class OrderSummaryScreen extends ConsumerWidget {
                             fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "₹",
+                        "₹${order.bill + order.deliveryCharges}",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -173,20 +236,6 @@ class OrderSummaryScreen extends ConsumerWidget {
                             color: Color.fromARGB(255, 137, 137, 137)),
                       ),
                       Text("${order.orderId}"),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Payment",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                            color: Color.fromARGB(255, 137, 137, 137)),
-                      ),
-                      Text("Paid Online"),
                     ],
                   ),
                   SizedBox(height: 10),
